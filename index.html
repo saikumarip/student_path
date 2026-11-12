@@ -4,123 +4,231 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StudentPath | Your Roadmap After 10th & Inter</title>
+<title>StudentPath - Your Future Starts Here</title>
 <style>
+:root {
+  --blue:#155eef;
+  --dark:#102a43;
+  --green:#0c9b78;
+  --light:#f4f8ff;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;color:#243247;background:#f5f9ff;line-height:1.6}
-header{background:#fff;padding:18px 7%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;box-shadow:0 2px 10px #dce5ef}
-.logo{font-size:25px;font-weight:bold;color:#1769aa}
-.logo span{color:#16a085}
-nav{display:flex;gap:17px;flex-wrap:wrap}
-nav a{color:#26384d;text-decoration:none;font-weight:600}
-nav a:hover{color:#168b75}
-.hero{padding:75px 7%;text-align:center;background:linear-gradient(120deg,#e4f2ff,#e5fff5)}
-.hero h1{font-size:clamp(30px,5vw,48px);color:#145b91;line-height:1.2}
-.hero p{font-size:18px;margin:18px auto;max-width:650px}
-.search{margin:25px auto;max-width:550px;display:flex;gap:8px}
-.search input{flex:1;min-width:0;padding:14px;border:1px solid #cbd8e5;border-radius:8px;font-size:16px}
-button{background:#087e70;color:white;border:0;padding:14px 22px;border-radius:8px;cursor:pointer;font-weight:bold}
-section{padding:50px 7%}
-h2{text-align:center;color:#145b91;font-size:30px;margin-bottom:25px}
+html{scroll-behavior:smooth}
+body{font-family:Arial,sans-serif;color:var(--dark);background:var(--light);line-height:1.6}
+header{
+  background:white;padding:16px 7%;display:flex;
+  align-items:center;justify-content:space-between;
+  gap:20px;flex-wrap:wrap;box-shadow:0 3px 15px #102a4310;
+  position:sticky;top:0;z-index:10
+}
+.logo{font-size:27px;font-weight:800;color:var(--blue)}
+.logo span{color:var(--green)}
+nav{display:flex;gap:19px;flex-wrap:wrap}
+nav a{text-decoration:none;color:#34465b;font-size:14px;font-weight:700}
+nav a:hover{color:var(--green)}
+.hero{
+  padding:85px 7%;background:linear-gradient(120deg,#e8f0ff,#e4fff5);
+  display:grid;grid-template-columns:1.3fr .7fr;align-items:center;gap:35px
+}
+.hero h1{font-size:clamp(36px,5vw,57px);line-height:1.13;color:var(--dark)}
+.hero h1 span{color:var(--blue)}
+.hero p{font-size:18px;color:#52657a;margin:20px 0;max-width:600px}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:13px 21px;border-radius:9px;text-decoration:none;font-weight:bold}
+.primary{background:var(--blue);color:white}
+.secondary{background:white;color:var(--blue);border:1px solid #cbd8f0}
+.hero-art{
+  background:white;border-radius:28px;padding:30px;text-align:center;
+  box-shadow:0 15px 40px #155eef18
+}
+.hero-art .emoji{font-size:85px}
+.hero-art h3{color:var(--green);font-size:23px;margin-top:12px}
+.hero-art p{font-size:15px;margin:8px auto}
+.search-wrap{padding:25px 7%;background:white}
+.search{max-width:720px;margin:auto;display:flex;gap:10px}
+.search input{flex:1;min-width:0;padding:15px;border:1px solid #d4deeb;border-radius:9px;font-size:16px}
+.search button{padding:14px 23px;background:var(--green);color:white;border:0;border-radius:9px;font-weight:bold;cursor:pointer}
+section{padding:65px 7%}
+.section-title{text-align:center;margin-bottom:32px}
+.section-title h2{font-size:32px;color:var(--dark)}
+.section-title p{color:#64748b;margin-top:7px}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-.card{background:white;padding:23px;border-radius:13px;box-shadow:0 4px 15px #dce5ef}
-.card h3{color:#087e70;margin-bottom:10px}
-.card a{display:inline-block;margin-top:12px;color:#087e70;font-weight:bold;text-decoration:none}
-.card p{color:#536276}
-.info{text-align:center;background:#e9f5ff}
-footer{text-align:center;background:#123b5b;color:white;padding:25px}
-@media(max-width:600px){header{justify-content:center}nav{justify-content:center}.hero{padding:50px 5%}.search{flex-direction:column}section{padding:38px 5%}}
+.card{
+  background:white;padding:24px;border-radius:16px;
+  border:1px solid #e5edf7;box-shadow:0 5px 18px #102a4309;
+  transition:transform .2s,box-shadow .2s
+}
+.card:hover{transform:translateY(-5px);box-shadow:0 12px 25px #102a4315}
+.card .emoji{font-size:35px}
+.card h3{font-size:19px;margin:12px 0 8px;color:var(--blue)}
+.card p{font-size:14px;color:#64748b}
+.card a{display:inline-block;margin-top:15px;color:var(--green);font-weight:bold;text-decoration:none}
+.tint{background:#eaf2ff}
+.green-tint{background:#e8faf4}
+.banner{
+  background:linear-gradient(120deg,#155eef,#087c9b);
+  color:white;text-align:center;padding:48px 25px;border-radius:20px
+}
+.banner h2{font-size:29px}
+.banner p{margin:12px auto 20px;max-width:600px}
+.banner a{background:white;color:var(--blue)}
+footer{background:#102a43;color:#dce8f5;padding:35px 7%;text-align:center}
+footer strong{color:white;font-size:22px}
+footer p{margin-top:8px;font-size:14px}
+#noResults{display:none;text-align:center;padding:20px;color:#64748b}
+@media(max-width:750px){
+ .hero{grid-template-columns:1fr;padding:55px 6%}
+ header{justify-content:center}
+ nav{justify-content:center;gap:12px}
+ section{padding:45px 6%}
+ .hero-art{max-width:400px;margin:auto}
+}
+@media(max-width:450px){
+ .search{flex-direction:column}
+ .search button{width:100%}
+ nav a{font-size:12px}
+}
 </style>
 </head>
 <body>
+
 <header>
-<div class="logo">Student<span>Path</span></div>
-<nav>
-<a href="#home">Home</a>
-<a href="#after10">After 10th</a>
-<a href="#afterinter">After Inter</a>
-<a href="#scholarships">Scholarships</a>
-<a href="#careers">Careers</a>
-<a href="#contact">Contact</a>
-</nav>
+  <div class="logo">Student<span>Path.</span></div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#after10">After 10th</a>
+    <a href="#afterinter">After Inter</a>
+    <a href="#scholarships">Scholarships</a>
+    <a href="#careers">Careers</a>
+    <a href="#resources">Resources</a>
+  </nav>
 </header>
 
+<main>
 <div class="hero" id="home">
-<h1>Your Roadmap After 10th & Inter</h1>
-<p>Explore courses, discover careers, find scholarships and plan your future with confidence.</p>
-<div class="search">
-<input id="searchInput" type="text" placeholder="Search courses, careers or scholarships...">
-<button onclick="searchCards()">Search</button>
+  <div>
+    <p><strong>WELCOME TO STUDENTPATH</strong></p>
+    <h1>Your Future.<br><span>Your Dreams.</span><br>Your Roadmap.</h1>
+    <p>Confused about what to study after 10th or Intermediate? Explore courses, careers, scholarships and colleges in one place.</p>
+    <div class="actions">
+      <a class="btn primary" href="#after10">Explore Courses →</a>
+      <a class="btn secondary" href="#careers">Find Your Career</a>
+    </div>
+  </div>
+  <div class="hero-art">
+    <div class="emoji">🎓 📚 🚀</div>
+    <h3>Learn. Explore. Grow.</h3>
+    <p>Take your next step towards a brighter future.</p>
+  </div>
 </div>
+
+<div class="search-wrap">
+  <div class="search">
+    <input id="searchInput" type="search" placeholder="Search courses, careers, scholarships...">
+    <button onclick="searchCards()">Search</button>
+  </div>
 </div>
 
 <section id="after10">
-<h2>What After 10th?</h2>
-<div class="cards">
-<div class="card"><h3>Intermediate (MPC)</h3><p>Explore mathematics, physics, engineering and technology pathways.</p><a href="#careers">Explore options →</a></div>
-<div class="card"><h3>Intermediate (BiPC)</h3><p>Discover biology, life sciences and healthcare-related pathways.</p><a href="#careers">Explore options →</a></div>
-<div class="card"><h3>Diploma Courses</h3><p>Learn practical and technical skills through diploma programmes.</p><a href="#careers">Explore options →</a></div>
-<div class="card"><h3>Arts & Commerce</h3><p>Explore business, humanities, economics and other study options.</p><a href="#careers">Explore options →</a></div>
-</div>
+  <div class="section-title">
+    <h2>What After 10th?</h2>
+    <p>Explore different educational pathways after your 10th class.</p>
+  </div>
+  <div class="cards">
+    <article class="card"><div class="emoji">🔬</div><h3>Intermediate MPC</h3><p>Explore mathematics, physics, engineering and technology pathways.</p><a href="#afterinter">Explore options →</a></article>
+    <article class="card"><div class="emoji">🧬</div><h3>Intermediate BiPC</h3><p>Discover biology, healthcare, life sciences and related pathways.</p><a href="#afterinter">Explore options →</a></article>
+    <article class="card"><div class="emoji">⚙️</div><h3>Diploma Courses</h3><p>Learn practical and technical skills through diploma programmes.</p><a href="#careers">Explore options →</a></article>
+    <article class="card"><div class="emoji">📊</div><h3>Arts & Commerce</h3><p>Discover business, humanities, economics and other study options.</p><a href="#careers">Explore options →</a></article>
+  </div>
 </section>
 
-<section id="afterinter" class="info">
-<h2>What After Intermediate?</h2>
-<div class="cards">
-<div class="card"><h3>Engineering</h3><p>Explore B.Tech and other engineering programmes.</p></div>
-<div class="card"><h3>Degree Courses</h3><p>Discover B.Sc, B.Com, BA and other degree options.</p></div>
-<div class="card"><h3>Professional Courses</h3><p>Learn about professional and specialised study pathways.</p></div>
-</div>
+<section class="tint" id="afterinter">
+  <div class="section-title">
+    <h2>What After Intermediate?</h2>
+    <p>Find a course that matches your interests and goals.</p>
+  </div>
+  <div class="cards">
+    <article class="card"><div class="emoji">💻</div><h3>B.Tech & Engineering</h3><p>Explore engineering branches, technology and technical education.</p></article>
+    <article class="card"><div class="emoji">🏥</div><h3>Medical & Life Sciences</h3><p>Learn about healthcare and life science education pathways.</p></article>
+    <article class="card"><div class="emoji">🎨</div><h3>Degree Courses</h3><p>Explore B.Sc, B.Com, BA and other undergraduate programmes.</p></article>
+    <article class="card"><div class="emoji">📈</div><h3>Professional Courses</h3><p>Discover management, finance and other professional pathways.</p></article>
+  </div>
 </section>
 
 <section id="scholarships">
-<h2>Scholarships & Student Support</h2>
-<div class="cards">
-<div class="card"><h3>Government Scholarships</h3><p>Find information about government scholarship opportunities. Check official eligibility and deadlines.</p></div>
-<div class="card"><h3>Merit Scholarships</h3><p>Explore scholarship opportunities based on academic achievement.</p></div>
-<div class="card"><h3>Financial Assistance</h3><p>Learn about education support and fee assistance programmes.</p></div>
-</div>
+  <div class="section-title">
+    <h2>Scholarships & Financial Support</h2>
+    <p>Explore opportunities that may help support your education.</p>
+  </div>
+  <div class="cards">
+    <article class="card"><div class="emoji">🏅</div><h3>Merit Scholarships</h3><p>Explore scholarships based on academic achievement.</p></article>
+    <article class="card"><div class="emoji">🏛️</div><h3>Government Schemes</h3><p>Learn about government scholarship programmes and eligibility.</p></article>
+    <article class="card"><div class="emoji">🤝</div><h3>Financial Assistance</h3><p>Find information about education fee support opportunities.</p></article>
+  </div>
 </section>
 
-<section id="careers" class="info">
-<h2>Career Guidance</h2>
-<div class="cards">
-<div class="card"><h3>Technology</h3><p>Explore software, computers, data and technology careers.</p></div>
-<div class="card"><h3>Healthcare</h3><p>Discover healthcare, life sciences and related careers.</p></div>
-<div class="card"><h3>Business</h3><p>Explore management, finance, accounting and entrepreneurship.</p></div>
-</div>
+<section class="green-tint" id="careers">
+  <div class="section-title">
+    <h2>Discover Your Career</h2>
+    <p>Get familiar with different career fields and possibilities.</p>
+  </div>
+  <div class="cards">
+    <article class="card"><div class="emoji">💻</div><h3>Technology</h3><p>Software, computer science, data and digital careers.</p></article>
+    <article class="card"><div class="emoji">🩺</div><h3>Healthcare</h3><p>Healthcare, life sciences and medical-related careers.</p></article>
+    <article class="card"><div class="emoji">💼</div><h3>Business</h3><p>Management, finance, accounting and entrepreneurship.</p></article>
+    <article class="card"><div class="emoji">🏗️</div><h3>Engineering</h3><p>Explore engineering fields and their applications.</p></article>
+  </div>
+</section>
+
+<section id="resources">
+  <div class="section-title">
+    <h2>Student Resources</h2>
+    <p>Useful information to help you plan your next step.</p>
+  </div>
+  <div class="cards">
+    <article class="card"><div class="emoji">📝</div><h3>Entrance Exams</h3><p>Understand entrance exams, eligibility and official notifications.</p></article>
+    <article class="card"><div class="emoji">📖</div><h3>Previous Papers</h3><p>Find examination preparation resources and question papers.</p></article>
+    <article class="card"><div class="emoji">🏫</div><h3>College Directory</h3><p>Explore colleges, programmes and admission information.</p></article>
+  </div>
+  <p id="noResults">No matching cards found. Try another search.</p>
 </section>
 
 <section>
-<h2>Entrance Exams & Previous Papers</h2>
-<div class="cards">
-<div class="card"><h3>Entrance Exams</h3><p>Learn about entrance exams, eligibility and official notifications.</p></div>
-<div class="card"><h3>Previous Question Papers</h3><p>Find study resources and previous examination papers.</p></div>
-<div class="card"><h3>College Directory</h3><p>Explore colleges and compare courses before applying.</p></div>
-</div>
+  <div class="banner">
+    <h2>Your Journey Starts Today!</h2>
+    <p>Explore your options, learn about opportunities and make informed decisions about your education.</p>
+    <a class="btn" href="#after10">Start Exploring →</a>
+  </div>
 </section>
-
-<section id="contact" class="info">
-<h2>Contact StudentPath</h2>
-<p>Helping students make informed decisions about their education and future.</p>
-<p>Email: Add your official contact email here.</p>
-</section>
+</main>
 
 <footer>
-<p>© 2026 StudentPath | Your Roadmap After 10th & Inter</p>
-<p>Learn • Explore • Grow</p>
+  <strong>StudentPath.</strong>
+  <p>Your Roadmap After 10th & Inter</p>
+  <p>Learn • Explore • Grow</p>
+  <p>© 2026 StudentPath. Educational information platform.</p>
 </footer>
 
 <script>
 function searchCards(){
-const query=document.getElementById('searchInput').value.toLowerCase().trim();
-const cards=document.querySelectorAll('.card');
-cards.forEach(card=>{
-card.style.display=card.innerText.toLowerCase().includes(query)?'block':'none';
-});
+  const query=document.getElementById('searchInput').value.toLowerCase().trim();
+  const cards=document.querySelectorAll('.card');
+  let found=0;
+  cards.forEach(card=>{
+    const match=card.innerText.toLowerCase().includes(query);
+    card.style.display=match?'block':'none';
+    if(match) found++;
+  });
+  document.getElementById('noResults').style.display=found?'none':'block';
 }
 document.getElementById('searchInput').addEventListener('keydown',function(e){
-if(e.key==='Enter')searchCards();
+  if(e.key==='Enter') searchCards();
+});
+document.getElementById('searchInput').addEventListener('input',function(){
+  if(!this.value.trim()){
+    document.querySelectorAll('.card').forEach(card=>card.style.display='block');
+    document.getElementById('noResults').style.display='none';
+  }
 });
 </script>
 </body>

@@ -38,8 +38,7 @@ const get = (sql, params = []) =>
   });
 
 app.use(helmet());
-app.use(express.json({limit:"10kb"}));
-app.use(express.static(__dirname));
+app.use(express.json({ limit: "10kb" }));
 
 app.use(session({
   store: new SQLiteStore({
@@ -70,8 +69,8 @@ const levels = [
   "Other"
 ];
 
-app.get("/", (req,res) => {
-  res.sendFile(path.join(__dirname,"index.html"));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 async function initializeDatabase() {
@@ -87,164 +86,194 @@ async function initializeDatabase() {
   `);
 }
 
-app.post("/api/register",authLimiter,async(req,res)=>{
+app.post("/api/register", authLimiter, async (req, res) => {
   try {
-    const {name,email,password,level}=req.body;
+    const { name, email, password, level } = req.body;
 
-    if(typeof name!=="string" ||
-       typeof email!=="string" ||
-       typeof password!=="string" ||
-       typeof level!=="string" ||
-       !name.trim() || name.length>100 ||
-       password.length<8 || password.length>128 ||
-       !levels.includes(level)) {
+    if (
+      typeof name !== "string" ||
+      typeof email !== "string" ||
+      typeof password !== "string" ||
+      typeof level !== "string" ||
+      !name.trim() ||
+      name.length > 100 ||
+      password.length < 8 ||
+      password.length > 128 ||
+      !levels.includes(level)
+    ) {
       return res.status(400).json({
-        error:"Please enter valid details. Password must have at least 8 characters."
+        error: "Please enter valid details. Password must have at least 8 characters."
       });
     }
 
-    const cleanEmail=email.trim().toLowerCase();
+    const cleanEmail = email.trim().toLowerCase();
 
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)){
-      return res.status(400).json({error:"Enter a valid email."});
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+      return res.status(400).json({
+        error: "Enter a valid email."
+      });
     }
 
-    const existing=await get(
-      "SELECT id FROM students WHERE email=?",
+    const existing = await get(
+      "SELECT id FROM students WHERE email = ?",
       [cleanEmail]
     );
 
-    if(existing){
+    if (existing) {
       return res.status(409).json({
-        error:"This email is already registered."
+        error: "This email is already registered."
       });
     }
 
-    const hash=await bcrypt.hash(password,12);
+    const hash = await bcrypt.hash(password, 12);
 
     await run(
       `INSERT INTO students
-      (name,email,password_hash,education_level)
-      VALUES(?,?,?,?)`,
-      [name.trim(),cleanEmail,hash,level]
+      (name, email, password_hash, education_level)
+      VALUES (?, ?, ?, ?)`,
+      [name.trim(), cleanEmail, hash, level]
     );
 
     res.status(201).json({
-      message:"Registration successful. Please log in."
+      message: "Registration successful. Please log in."
     });
 
-  } catch(err) {
+  } catch (err) {
     console.error(err);
-    res.status(500).json({error:"Registration failed."});
+    res.status(500).json({
+      error: "Registration failed."
+    });
   }
 });
 
-app.post("/api/login",authLimiter,async(req,res)=>{
+app.post("/api/login", authLimiter, async (req, res) => {
   try {
-    const {email,password}=req.body;
+    const { email, password } = req.body;
 
-    if(typeof email!=="string" ||
-       typeof password!=="string") {
-      return res.status(400).json({error:"Enter email and password."});
-    }
-
-    const student=await get(
-      "SELECT * FROM students WHERE email=?",
-      [email.trim().toLowerCase()]
-    );
-
-    if(!student || !(await bcrypt.compare(
-      password,student.password_hash
-    ))) {
-      return res.status(401).json({
-        error:"Incorrect email or password."
+    if (
+      typeof email !== "string" ||
+      typeof password !== "string"
+    ) {
+      return res.status(400).json({
+        error: "Enter email and password."
       });
     }
 
-    req.session.regenerate(err=>{
-      if(err){
-        return res.status(500).json({error:"Login failed."});
+    const student = await get(
+      "SELECT * FROM students WHERE email = ?",
+      [email.trim().toLowerCase()]
+    );
+
+    if (!student || !(await bcrypt.compare(
+      password,
+      student.password_hash
+    ))) {
+      return res.status(401).json({
+        error: "Incorrect email or password."
+      });
+    }
+
+    req.session.regenerate(err => {
+      if (err) {
+        return res.status(500).json({
+          error: "Login failed."
+        });
       }
 
-      req.session.studentId=student.id;
+      req.session.studentId = student.id;
 
       res.json({
-        message:"Login successful.",
-        student:{
-          id:student.id,
-          name:student.name,
-          email:student.email,
-          level:student.education_level
+        message: "Login successful.",
+        student: {
+          id: student.id,
+          name: student.name,
+          email: student.email,
+          level: student.education_level
         }
       });
     });
 
-  } catch(err) {
+  } catch (err) {
     console.error(err);
-    res.status(500).json({error:"Login failed."});
+    res.status(500).json({
+      error: "Login failed."
+    });
   }
 });
 
-app.get("/api/me",async(req,res)=>{
-  if(!req.session.studentId){
-    return res.status(401).json({error:"Please log in."});
+app.get("/api/me", async (req, res) => {
+  if (!req.session.studentId) {
+    return res.status(401).json({
+      error: "Please log in."
+    });
   }
 
-  try{
-    const student=await get(
-      `SELECT id,name,email,education_level
-       FROM students WHERE id=?`,
+  try {
+    const student = await get(
+      `SELECT id, name, email, education_level
+       FROM students WHERE id = ?`,
       [req.session.studentId]
     );
 
-    if(!student){
-      return res.status(401).json({error:"Student not found."});
+    if (!student) {
+      return res.status(401).json({
+        error: "Student not found."
+      });
     }
 
-    res.json({student});
-  }catch(err){
-    res.status(500).json({error:"Could not load profile."});
+    res.json({ student });
+
+  } catch (err) {
+    res.status(500).json({
+      error: "Could not load profile."
+    });
   }
 });
 
-app.post("/api/logout",(req,res)=>{
-  req.session.destroy(err=>{
-    if(err){
-      return res.status(500).json({error:"Logout failed."});
+app.post("/api/logout", (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return res.status(500).json({
+        error: "Logout failed."
+      });
     }
+
     res.clearCookie("studentpath.sid");
-    res.json({message:"Logged out successfully."});
+
+    res.json({
+      message: "Logged out successfully."
+    });
   });
 });
 
-app.get("/api/courses",(req,res)=>{
+app.get("/api/courses", (req, res) => {
   res.json([
-    {name:"Intermediate MPC",category:"After 10th"},
-    {name:"Intermediate BiPC",category:"After 10th"},
-    {name:"Diploma Courses",category:"After 10th"},
-    {name:"B.Tech & Engineering",category:"After Inter"},
-    {name:"Medical & Life Sciences",category:"After Inter"},
-    {name:"Degree Courses",category:"After Inter"}
+    { name: "Intermediate MPC", category: "After 10th" },
+    { name: "Intermediate BiPC", category: "After 10th" },
+    { name: "Diploma Courses", category: "After 10th" },
+    { name: "B.Tech & Engineering", category: "After Inter" },
+    { name: "Medical & Life Sciences", category: "After Inter" },
+    { name: "Degree Courses", category: "After Inter" }
   ]);
 });
 
-app.get("/api/scholarships",(req,res)=>{
+app.get("/api/scholarships", (req, res) => {
   res.json([
-    {name:"Merit Scholarships",type:"Academic achievement"},
-    {name:"Government Schemes",type:"Government support"},
-    {name:"Financial Assistance",type:"Education fee support"}
+    { name: "Merit Scholarships", type: "Academic achievement" },
+    { name: "Government Schemes", type: "Government support" },
+    { name: "Financial Assistance", type: "Education fee support" }
   ]);
 });
 
-async function start(){
+async function start() {
   await initializeDatabase();
 
-  app.listen(PORT,"0.0.0.0",()=>{
-    console.log("StudentPath server running on port "+PORT);
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log("StudentPath server running on port " + PORT);
   });
 }
 
-start().catch(err=>{
-  console.error("Server startup failed:",err);
+start().catch(err => {
+  console.error("Server startup failed:", err);
   process.exit(1);
 });

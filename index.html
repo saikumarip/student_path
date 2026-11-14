@@ -5,6 +5,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>StudentPath | Your Future Starts Here</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 :root{--blue:#155eef;--dark:#102a43;--green:#0c9b78;--light:#f4f8ff}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -57,168 +60,186 @@ footer{background:var(--dark);color:white;text-align:center;padding:30px}
 .message{margin-top:12px;color:var(--green);font-weight:bold}
 .user-status{font-size:14px;color:var(--green);font-weight:bold}
 @media(max-width:750px){
- .hero{grid-template-columns:1fr;padding:45px 6%}
- header{justify-content:center}
- nav{justify-content:center}
- section{padding:45px 6%}
+.hero{grid-template-columns:1fr;padding:45px 6%}
+header{justify-content:center}
+nav{justify-content:center}
+section{padding:45px 6%}
 }
 @media(max-width:450px){.search{flex-direction:column}.search button{width:100%}}
 </style>
 </head>
+
 <body>
 
 <header>
- <div class="logo">Student<span>Path.</span></div>
- <nav>
-  <a href="#home">Home</a>
-  <a href="#after10">After 10th</a>
-  <a href="#afterinter">After Inter</a>
-  <a href="#scholarships">Scholarships</a>
-  <a href="#careers">Careers</a>
-  <a href="#resources">Resources</a>
- </nav>
- <div class="auth">
-  <button class="secondary" id="loginButton" onclick="openModal('loginModal')">Login</button>
-  <button class="primary" id="registerButton" onclick="openModal('registerModal')">Register</button>
-  <button class="green" id="logoutButton" onclick="logout()" hidden>Logout</button>
- </div>
+<div class="logo">Student<span>Path.</span></div>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#after10">After 10th</a>
+<a href="#afterinter">After Inter</a>
+<a href="#scholarships">Scholarships</a>
+<a href="#careers">Careers</a>
+<a href="#resources">Resources</a>
+</nav>
+
+<div class="auth">
+<button class="secondary" id="loginButton" onclick="openModal('loginModal')">Login</button>
+<button class="primary" id="registerButton" onclick="openModal('registerModal')">Register</button>
+<button class="green" id="logoutButton" onclick="logout()" hidden>Logout</button>
+</div>
 </header>
 
 <main>
+
 <div class="hero" id="home">
- <div>
-  <p><strong>WELCOME TO STUDENTPATH</strong></p>
-  <h1>Your Future.<br><span>Your Dreams.</span><br>Your Roadmap.</h1>
-  <p>Confused about what to study after 10th or Intermediate? Explore courses, careers, scholarships and colleges in one place.</p>
-  <button class="primary" onclick="goTo('after10')">Explore Courses →</button>
-  <button class="secondary" onclick="goTo('careers')">Find Your Career</button>
-  <p id="welcomeUser" class="user-status"></p>
- </div>
- <div class="hero-art">
-  <div class="emoji">🎓 📚 🚀</div>
-  <h2>Learn. Explore. Grow.</h2>
-  <p>Take your next step towards a brighter future.</p>
- </div>
+<div>
+<p><strong>WELCOME TO STUDENTPATH</strong></p>
+<h1>Your Future.<br><span>Your Dreams.</span><br>Your Roadmap.</h1>
+<p>Confused about what to study after 10th or Intermediate? Explore courses, careers, scholarships and colleges in one place.</p>
+<button class="primary" onclick="goTo('after10')">Explore Courses →</button>
+<button class="secondary" onclick="goTo('careers')">Find Your Career</button>
+<p id="welcomeUser" class="user-status"></p>
+</div>
+
+<div class="hero-art">
+<div class="emoji">🎓 📚 🚀</div>
+<h2>Learn. Explore. Grow.</h2>
+<p>Take your next step towards a brighter future.</p>
+</div>
 </div>
 
 <div class="search-wrap">
- <div class="search">
-  <input id="searchInput" type="search" placeholder="Search courses, careers, scholarships...">
-  <button onclick="searchCards()">Search</button>
-  <button class="secondary" onclick="resetSearch()">Reset</button>
- </div>
+<div class="search">
+<input id="searchInput" type="search" placeholder="Search courses, careers, scholarships...">
+<button onclick="searchCards()">Search</button>
+<button class="secondary" onclick="resetSearch()">Reset</button>
+</div>
 </div>
 
 <section id="after10">
- <div class="section-title"><h2>What After 10th?</h2><p>Explore educational pathways after your 10th class.</p></div>
- <div class="cards">
-  <article class="card"><div class="emoji">🔬</div><h3>Intermediate MPC</h3><p>Mathematics, physics and engineering pathways.</p><button class="primary" onclick="showDetail('Intermediate MPC','MPC includes Mathematics, Physics and Chemistry. It can lead to engineering, computer science and other science programmes.')">Explore options</button></article>
-  <article class="card"><div class="emoji">🧬</div><h3>Intermediate BiPC</h3><p>Biology, healthcare and life sciences.</p><button class="primary" onclick="showDetail('Intermediate BiPC','BiPC includes Biology, Physics and Chemistry. It can lead to healthcare, pharmacy and life sciences.')">Explore options</button></article>
-  <article class="card"><div class="emoji">⚙️</div><h3>Diploma Courses</h3><p>Practical and technical education.</p><button class="primary" onclick="showDetail('Diploma Courses','Explore engineering, computer technology, electronics and other technical diploma programmes.')">Explore options</button></article>
-  <article class="card"><div class="emoji">📊</div><h3>Arts & Commerce</h3><p>Business, humanities and economics.</p><button class="primary" onclick="showDetail('Arts & Commerce','Explore commerce, economics, humanities, business studies and related educational pathways.')">Explore options</button></article>
- </div>
+<div class="section-title"><h2>What After 10th?</h2><p>Explore educational pathways after your 10th class.</p></div>
+<div class="cards">
+<article class="card"><div class="emoji">🔬</div><h3>Intermediate MPC</h3><p>Mathematics, physics and engineering pathways.</p><button class="primary" onclick="showDetail('Intermediate MPC','MPC includes Mathematics, Physics and Chemistry. It can lead to engineering, computer science and other science programmes.')">Explore options</button></article>
+<article class="card"><div class="emoji">🧬</div><h3>Intermediate BiPC</h3><p>Biology, healthcare and life sciences.</p><button class="primary" onclick="showDetail('Intermediate BiPC','BiPC includes Biology, Physics and Chemistry. It can lead to healthcare, pharmacy and life sciences.')">Explore options</button></article>
+<article class="card"><div class="emoji">⚙️</div><h3>Diploma Courses</h3><p>Practical and technical education.</p><button class="primary" onclick="showDetail('Diploma Courses','Explore engineering, computer technology, electronics and other technical diploma programmes.')">Explore options</button></article>
+<article class="card"><div class="emoji">📊</div><h3>Arts & Commerce</h3><p>Business, humanities and economics.</p><button class="primary" onclick="showDetail('Arts & Commerce','Explore commerce, economics, humanities, business studies and related educational pathways.')">Explore options</button></article>
+</div>
 </section>
 
 <section class="tint" id="afterinter">
- <div class="section-title"><h2>What After Intermediate?</h2><p>Find a course that matches your interests.</p></div>
- <div class="cards">
-  <article class="card"><div class="emoji">💻</div><h3>B.Tech & Engineering</h3><p>Technology and engineering branches.</p><button class="primary" onclick="showDetail('B.Tech & Engineering','Explore Computer Science, ECE, Electrical, Mechanical and Civil engineering. Admission requirements vary.')">View Details</button></article>
-  <article class="card"><div class="emoji">🏥</div><h3>Medical & Life Sciences</h3><p>Healthcare and life sciences.</p><button class="primary" onclick="showDetail('Medical & Life Sciences','Explore medicine, nursing, pharmacy, biotechnology and life sciences. Some courses require entrance exams.')">View Details</button></article>
-  <article class="card"><div class="emoji">🎨</div><h3>Degree Courses</h3><p>B.Sc, B.Com, BA and more.</p><button class="primary" onclick="showDetail('Degree Courses','Explore B.Sc, B.Com, BA, BBA and other undergraduate programmes.')">View Details</button></article>
-  <article class="card"><div class="emoji">📈</div><h3>Professional Courses</h3><p>Management and finance.</p><button class="primary" onclick="showDetail('Professional Courses','Explore management, accounting, finance and business programmes.')">View Details</button></article>
- </div>
+<div class="section-title"><h2>What After Intermediate?</h2><p>Find a course that matches your interests.</p></div>
+<div class="cards">
+<article class="card"><div class="emoji">💻</div><h3>B.Tech & Engineering</h3><p>Technology and engineering branches.</p><button class="primary" onclick="showDetail('B.Tech & Engineering','Explore Computer Science, ECE, Electrical, Mechanical and Civil engineering. Admission requirements vary.')">View Details</button></article>
+<article class="card"><div class="emoji">🏥</div><h3>Medical & Life Sciences</h3><p>Healthcare and life sciences.</p><button class="primary" onclick="showDetail('Medical & Life Sciences','Explore medicine, nursing, pharmacy, biotechnology and life sciences. Some courses require entrance exams.')">View Details</button></article>
+<article class="card"><div class="emoji">🎨</div><h3>Degree Courses</h3><p>B.Sc, B.Com, BA and more.</p><button class="primary" onclick="showDetail('Degree Courses','Explore B.Sc, B.Com, BA, BBA and other undergraduate programmes.')">View Details</button></article>
+<article class="card"><div class="emoji">📈</div><h3>Professional Courses</h3><p>Management and finance.</p><button class="primary" onclick="showDetail('Professional Courses','Explore management, accounting, finance and business programmes.')">View Details</button></article>
+</div>
 </section>
 
 <section id="scholarships">
- <div class="section-title"><h2>Scholarships & Financial Support</h2><p>Explore opportunities that may support your education.</p></div>
- <div class="cards">
-  <article class="card"><div class="emoji">🏅</div><h3>Merit Scholarships</h3><p>Scholarships based on academic achievement.</p><button class="primary" onclick="showDetail('Merit Scholarships','These scholarships may consider academic marks and achievements. Check individual scheme eligibility and deadlines.')">Learn More</button></article>
-  <article class="card"><div class="emoji">🏛️</div><h3>Government Schemes</h3><p>Government scholarship programmes.</p><button class="primary" onclick="showDetail('Government Schemes','Visit scholarships.gov.in and official state scholarship portals to check current schemes and eligibility.')">Learn More</button></article>
-  <article class="card"><div class="emoji">🤝</div><h3>Financial Assistance</h3><p>Education fee support opportunities.</p><button class="primary" onclick="showDetail('Financial Assistance','Contact your college scholarship office about fee support and approved assistance schemes.')">Learn More</button></article>
- </div>
+<div class="section-title"><h2>Scholarships & Financial Support</h2><p>Explore opportunities that may support your education.</p></div>
+<div class="cards">
+<article class="card"><div class="emoji">🏅</div><h3>Merit Scholarships</h3><p>Scholarships based on academic achievement.</p><button class="primary" onclick="showDetail('Merit Scholarships','These scholarships may consider academic marks and achievements. Check individual scheme eligibility and deadlines.')">Learn More</button></article>
+<article class="card"><div class="emoji">🏛️</div><h3>Government Schemes</h3><p>Government scholarship programmes.</p><button class="primary" onclick="showDetail('Government Schemes','Visit scholarships.gov.in and official state scholarship portals to check current schemes and eligibility.')">Learn More</button></article>
+<article class="card"><div class="emoji">🤝</div><h3>Financial Assistance</h3><p>Education fee support opportunities.</p><button class="primary" onclick="showDetail('Financial Assistance','Contact your college scholarship office about fee support and approved assistance schemes.')">Learn More</button></article>
+</div>
 </section>
 
 <section class="green-tint" id="careers">
- <div class="section-title"><h2>Discover Your Career</h2><p>Explore different career fields and possibilities.</p></div>
- <div class="cards">
-  <article class="card"><div class="emoji">💻</div><h3>Technology</h3><p>Software, data and digital careers.</p><button class="primary" onclick="showDetail('Technology Careers','Possible careers include software developer, web developer, data analyst and IT support specialist.')">Explore Career</button></article>
-  <article class="card"><div class="emoji">🩺</div><h3>Healthcare</h3><p>Medical and healthcare careers.</p><button class="primary" onclick="showDetail('Healthcare Careers','Possible careers include doctor, nurse, pharmacist and laboratory professional. Qualifications vary.')">Explore Career</button></article>
-  <article class="card"><div class="emoji">💼</div><h3>Business</h3><p>Management, finance and accounting.</p><button class="primary" onclick="showDetail('Business Careers','Possible careers include accountant, business analyst, manager and entrepreneur.')">Explore Career</button></article>
-  <article class="card"><div class="emoji">🏗️</div><h3>Engineering</h3><p>Engineering fields and applications.</p><button class="primary" onclick="showDetail('Engineering Careers','Explore civil, mechanical, electrical, electronics and computer engineering career paths.')">Explore Career</button></article>
- </div>
+<div class="section-title"><h2>Discover Your Career</h2><p>Explore different career fields and possibilities.</p></div>
+<div class="cards">
+<article class="card"><div class="emoji">💻</div><h3>Technology</h3><p>Software, data and digital careers.</p><button class="primary" onclick="showDetail('Technology Careers','Possible careers include software developer, web developer, data analyst and IT support specialist.')">Explore Career</button></article>
+<article class="card"><div class="emoji">🩺</div><h3>Healthcare</h3><p>Medical and healthcare careers.</p><button class="primary" onclick="showDetail('Healthcare Careers','Possible careers include doctor, nurse, pharmacist and laboratory professional. Qualifications vary.')">Explore Career</button></article>
+<article class="card"><div class="emoji">💼</div><h3>Business</h3><p>Management, finance and accounting.</p><button class="primary" onclick="showDetail('Business Careers','Possible careers include accountant, business analyst, manager and entrepreneur.')">Explore Career</button></article>
+<article class="card"><div class="emoji">🏗️</div><h3>Engineering</h3><p>Engineering fields and applications.</p><button class="primary" onclick="showDetail('Engineering Careers','Explore civil, mechanical, electrical, electronics and computer engineering career paths.')">Explore Career</button></article>
+</div>
 </section>
 
 <section id="resources">
- <div class="section-title"><h2>Student Resources</h2><p>Useful information to plan your next step.</p></div>
- <div class="cards">
-  <article class="card"><div class="emoji">📝</div><h3>Entrance Exams</h3><p>Eligibility and examination information.</p><button class="primary" onclick="showDetail('Entrance Exams','Examples include JEE Main, NEET, CUET and state-level entrance examinations. Check official websites for current dates and eligibility.')">View Resources</button></article>
-  <article class="card"><div class="emoji">📖</div><h3>Previous Papers</h3><p>Examination preparation resources.</p><button class="primary" onclick="showDetail('Previous Papers','Use official examination websites and institution portals to find previous question papers.')">View Resources</button></article>
-  <article class="card"><div class="emoji">🏫</div><h3>College Directory</h3><p>Colleges and admission information.</p><button class="primary" onclick="showDetail('College Directory','Compare colleges by courses, fees, location and facilities. Verify admission details with each institution.')">View Resources</button></article>
- </div>
- <p id="noResults">No matching cards found. Try another search.</p>
+<div class="section-title"><h2>Student Resources</h2><p>Useful information to plan your next step.</p></div>
+<div class="cards">
+<article class="card"><div class="emoji">📝</div><h3>Entrance Exams</h3><p>Eligibility and examination information.</p><button class="primary" onclick="showDetail('Entrance Exams','Examples include JEE Main, NEET, CUET and state-level entrance examinations. Check official websites for current dates and eligibility.')">View Resources</button></article>
+<article class="card"><div class="emoji">📖</div><h3>Previous Papers</h3><p>Examination preparation resources.</p><button class="primary" onclick="showDetail('Previous Papers','Use official examination websites and institution portals to find previous question papers.')">View Resources</button></article>
+<article class="card"><div class="emoji">🏫</div><h3>College Directory</h3><p>Colleges and admission information.</p><button class="primary" onclick="showDetail('College Directory','Compare colleges by courses, fees, location and facilities. Verify admission details with each institution.')">View Resources</button></article>
+</div>
+<p id="noResults">No matching cards found. Try another search.</p>
 </section>
 
-<section><div class="banner"><h2>Your Journey Starts Today!</h2><p>Explore your options and make informed decisions.</p><button class="secondary" onclick="goTo('after10')">Start Exploring →</button></div></section>
+<section>
+<div class="banner">
+<h2>Your Journey Starts Today!</h2>
+<p>Explore your options and make informed decisions.</p>
+<button class="secondary" onclick="goTo('after10')">Start Exploring →</button>
+</div>
+</section>
+
 </main>
 
-<footer><strong>StudentPath.</strong><p>Your Roadmap After 10th & Inter</p><p>Learn • Explore • Grow</p><p>© 2026 StudentPath</p></footer>
+<footer>
+<strong>StudentPath.</strong>
+<p>Your Roadmap After 10th & Inter</p>
+<p>Learn • Explore • Grow</p>
+<p>© 2026 StudentPath</p>
+</footer>
 
 <div class="modal" id="loginModal">
- <div class="modal-box">
-  <button class="close" onclick="closeModals()">✕</button>
-  <h2>Student Login</h2>
-  <form id="loginForm">
-   <div class="field"><label>Email</label><input id="loginEmail" type="email" required></div>
-   <div class="field"><label>Password</label><input id="loginPassword" type="password" required></div>
-   <button class="primary" type="submit">Login</button>
-  </form>
-  <p id="loginMessage" class="message"></p>
-  <p>New student? <a href="#" onclick="switchModal('registerModal');return false">Register here</a></p>
- </div>
+<div class="modal-box">
+<button class="close" onclick="closeModals()">✕</button>
+<h2>Student Login</h2>
+<form id="loginForm">
+<div class="field"><label>Email</label><input id="loginEmail" type="email" required></div>
+<div class="field"><label>Password</label><input id="loginPassword" type="password" required></div>
+<button class="primary" type="submit">Login</button>
+</form>
+<p id="loginMessage" class="message"></p>
+<p>New student? <a href="#" onclick="switchModal('registerModal');return false">Register here</a></p>
+</div>
 </div>
 
 <div class="modal" id="registerModal">
- <div class="modal-box">
-  <button class="close" onclick="closeModals()">✕</button>
-  <h2>Student Registration</h2>
-  <form id="registerForm">
-   <div class="field"><label>Full Name</label><input id="regName" required maxlength="100"></div>
-   <div class="field"><label>Email</label><input id="regEmail" type="email" required></div>
-   <div class="field"><label>Password (at least 8 characters)</label><input id="regPassword" type="password" minlength="8" required></div>
-   <div class="field"><label>Education Level</label>
-    <select id="regLevel" required>
-     <option value="">Choose your level</option>
-     <option>10th Class</option><option>Intermediate</option><option>Degree</option><option>Other</option>
-    </select>
-   </div>
-   <button class="primary" type="submit">Create Account</button>
-  </form>
-  <p id="registerMessage" class="message"></p>
-  <p>Already registered? <a href="#" onclick="switchModal('loginModal');return false">Login here</a></p>
- </div>
+<div class="modal-box">
+<button class="close" onclick="closeModals()">✕</button>
+<h2>Student Registration</h2>
+<form id="registerForm">
+<div class="field"><label>Full Name</label><input id="regName" required maxlength="100"></div>
+<div class="field"><label>Email</label><input id="regEmail" type="email" required></div>
+<div class="field"><label>Password (at least 8 characters)</label><input id="regPassword" type="password" minlength="8" required></div>
+<div class="field">
+<label>Education Level</label>
+<select id="regLevel" required>
+<option value="">Choose your level</option>
+<option>10th Class</option>
+<option>Intermediate</option>
+<option>Degree</option>
+<option>Other</option>
+</select>
+</div>
+<button class="primary" type="submit">Create Account</button>
+</form>
+<p id="registerMessage" class="message"></p>
+<p>Already registered? <a href="#" onclick="switchModal('loginModal');return false">Login here</a></p>
+</div>
 </div>
 
 <div class="modal" id="detailModal">
- <div class="modal-box">
-  <button class="close" onclick="closeModals()">✕</button>
-  <h2 id="detailTitle"></h2>
-  <p id="detailText"></p>
-  <button class="primary" onclick="closeModals()">Close</button>
- </div>
+<div class="modal-box">
+<button class="close" onclick="closeModals()">✕</button>
+<h2 id="detailTitle"></h2>
+<p id="detailText"></p>
+<button class="primary" onclick="closeModals()">Close</button>
+</div>
 </div>
 
 <script>
-async function apiRequest(url,data){
- const response=await fetch(url,{
-  method:"POST",
-  headers:{"Content-Type":"application/json"},
-  credentials:"same-origin",
-  body:JSON.stringify(data)
- });
- const result=await response.json();
- if(!response.ok)throw new Error(result.error||"Request failed");
- return result;
-}
+// SUPABASE CONNECTION
+const SUPABASE_URL = "https://lybqndynnbtngqktjir.supabase.co";
+const SUPABASE_KEY = "sb_publishable_P62QuwPb2C160kd8eJqPyA_CxzzYRzy";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 function openModal(id){
  closeModals();
@@ -239,86 +260,137 @@ document.querySelectorAll(".modal").forEach(m=>{
  m.addEventListener("click",e=>{if(e.target===m)closeModals()});
 });
 
+// REGISTRATION
 document.getElementById("registerForm").addEventListener("submit",async function(e){
  e.preventDefault();
+
  const msg=document.getElementById("registerMessage");
  msg.textContent="Creating account...";
+
+ const name=document.getElementById("regName").value.trim();
+ const email=document.getElementById("regEmail").value.trim();
+ const password=document.getElementById("regPassword").value;
+ const level=document.getElementById("regLevel").value;
+
  try{
-  const result=await apiRequest("/api/register",{
-   name:document.getElementById("regName").value,
-   email:document.getElementById("regEmail").value,
-   password:document.getElementById("regPassword").value,
-   level:document.getElementById("regLevel").value
+  const {data,error}=await supabaseClient.auth.signUp({
+   email:email,
+   password:password,
+   options:{
+    data:{
+     full_name:name,
+     education_level:level
+    }
+   }
   });
-  msg.textContent=result.message+" You can now log in.";
+
+  if(error)throw error;
+
+  msg.textContent="Registration successful! Check your email if confirmation is required.";
   this.reset();
- }catch(err){msg.textContent=err.message}
+
+ }catch(err){
+  msg.textContent=err.message;
+ }
 });
 
+// LOGIN
 document.getElementById("loginForm").addEventListener("submit",async function(e){
  e.preventDefault();
+
  const msg=document.getElementById("loginMessage");
  msg.textContent="Checking login...";
+
  try{
-  const result=await apiRequest("/api/login",{
-   email:document.getElementById("loginEmail").value,
+  const {data,error}=await supabaseClient.auth.signInWithPassword({
+   email:document.getElementById("loginEmail").value.trim(),
    password:document.getElementById("loginPassword").value
   });
-  document.getElementById("welcomeUser").textContent="Welcome, "+result.student.name+"!";
-  updateAuth(true);
-  msg.textContent=result.message;
+
+  if(error)throw error;
+
+  msg.textContent="Login successful!";
+  updateUser(data.user);
   setTimeout(closeModals,1000);
- }catch(err){msg.textContent=err.message}
+
+ }catch(err){
+  msg.textContent=err.message;
+ }
 });
 
-function updateAuth(loggedIn){
+// UPDATE LOGIN DISPLAY
+function updateUser(user){
+ const loggedIn=!!user;
+
  document.getElementById("loginButton").hidden=loggedIn;
  document.getElementById("registerButton").hidden=loggedIn;
  document.getElementById("logoutButton").hidden=!loggedIn;
-}
 
-async function checkLogin(){
- try{
-  const r=await fetch("/api/me",{credentials:"same-origin"});
-  if(!r.ok)return;
-  const data=await r.json();
-  document.getElementById("welcomeUser").textContent="Welcome back, "+data.student.name+"!";
-  updateAuth(true);
- }catch(e){console.error(e)}
-}
-
-async function logout(){
- try{
-  await apiRequest("/api/logout",{});
+ if(user){
+  const name=user.user_metadata?.full_name || user.email;
+  document.getElementById("welcomeUser").textContent="Welcome, "+name+"!";
+ }else{
   document.getElementById("welcomeUser").textContent="";
-  updateAuth(false);
-  alert("You have logged out.");
- }catch(e){alert(e.message)}
+ }
 }
 
+// CHECK EXISTING SESSION
+async function checkLogin(){
+ const {data,error}=await supabaseClient.auth.getUser();
+
+ if(!error && data.user){
+  updateUser(data.user);
+ }
+}
+
+// LOGOUT
+async function logout(){
+ const {error}=await supabaseClient.auth.signOut();
+
+ if(error){
+  alert(error.message);
+  return;
+ }
+
+ updateUser(null);
+ alert("You have logged out.");
+}
+
+// LISTEN FOR AUTHENTICATION CHANGES
+supabaseClient.auth.onAuthStateChange((event,session)=>{
+ updateUser(session?.user || null);
+});
+
+// SEARCH
 function searchCards(){
  const q=document.getElementById("searchInput").value.toLowerCase().trim();
  let found=0;
+
  document.querySelectorAll(".card").forEach(card=>{
   const match=card.innerText.toLowerCase().includes(q);
   card.style.display=match?"block":"none";
   if(match)found++;
  });
+
  document.getElementById("noResults").style.display=found?"none":"block";
 }
+
 function resetSearch(){
  document.getElementById("searchInput").value="";
  document.querySelectorAll(".card").forEach(c=>c.style.display="block");
  document.getElementById("noResults").style.display="none";
 }
+
 document.getElementById("searchInput").addEventListener("keydown",e=>{
  if(e.key==="Enter")searchCards();
 });
+
 document.getElementById("searchInput").addEventListener("input",()=>{
  if(!document.getElementById("searchInput").value.trim())resetSearch();
 });
 
 checkLogin();
 </script>
+
 </body>
 </html>
